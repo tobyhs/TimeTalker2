@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <path
+    stroke="black" fill="white" stroke-width="5"
+    d="M 64 96 A 45 35 0 1 1 80 90 L 120 120 z"
+  />
+
+  <text x="30" y="68" font-size="20" font-weight="bold">
+    12:34
+  </text>
+</svg>
