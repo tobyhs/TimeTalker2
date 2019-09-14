@@ -16,9 +16,19 @@ android {
     }
 
     buildTypes {
+        debug {
+            versionNameSuffix '-debug'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        local {
+            initWith buildTypes.release
+            signingConfig signingConfigs.debug
+            versionNameSuffix '-local'
         }
     }
 }
