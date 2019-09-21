@@ -16,8 +16,8 @@ class AppTest {
     fun createNotificationChannels() {
         val app = ApplicationProvider.getApplicationContext<App>()
         val notificationManager = app.getSystemService(NotificationManager::class.java)
-        val channel = notificationManager.getNotificationChannel("default")
-        assertThat(channel.name.toString(), equalTo("Default"))
+        val channel = notificationManager.getNotificationChannel("service")
+        assertThat(channel.name.toString(), equalTo("Service Sticky Notifications"))
         assertThat(channel.importance, equalTo(NotificationManager.IMPORTANCE_LOW))
     }
 }

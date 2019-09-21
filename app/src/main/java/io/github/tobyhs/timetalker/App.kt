@@ -9,7 +9,7 @@ import android.app.NotificationManager
  */
 class App : Application() {
     companion object {
-        const val DEFAULT_NOTIFICATION_CHANNEL = "default"
+        const val SERVICE_NOTIFICATION_CHANNEL = "service"
     }
 
     override fun onCreate() {
@@ -22,8 +22,8 @@ class App : Application() {
      */
     private fun createNotificationChannels() {
         val channel = NotificationChannel(
-            DEFAULT_NOTIFICATION_CHANNEL,
-            getString(R.string.default_notification_channel_name),
+            SERVICE_NOTIFICATION_CHANNEL,
+            getString(R.string.service_notification_channel_name),
             NotificationManager.IMPORTANCE_LOW
         )
         getSystemService(NotificationManager::class.java)?.createNotificationChannel(channel)
