@@ -2,4 +2,6 @@
     <string name="app_name">Time Talker</string>
     <string name="service_notification_channel_name">Service Sticky Notifications</string>
     <string name="start">Start</string>
+    <string name="shake_detector_notification_title">Detecting shaking</string>
+    <string name="tts_init_failure">Time Talker: Failed to initialize TextToSpeech</string>
 </resources>
