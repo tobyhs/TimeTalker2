@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".ScreenOnReceiver" />
+
         <service android:name=".ShakeDetectorService" android:enabled="true" />
     </application>
 </manifest>
