@@ -22,6 +22,7 @@
 
         <receiver android:name=".ScreenOnReceiver" />
 
+        <service android:name=".ScreenService" android:enabled="true" />
         <service android:name=".ShakeDetectorService" android:enabled="true" />
     </application>
 </manifest>
