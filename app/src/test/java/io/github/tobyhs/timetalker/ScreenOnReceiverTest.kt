@@ -23,8 +23,8 @@ class ScreenOnReceiverTest {
     private val receiver = ScreenOnReceiver()
 
     @Test
-    fun `onReceive with ringer on starts ShakeDetectorService`() {
-        audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
+    fun `onReceive with a positive ring stream volume starts ShakeDetectorService`() {
+        audioManager.setStreamVolume(AudioManager.STREAM_RING, 5, 0)
         receiver.onReceive(application, Intent(Intent.ACTION_SCREEN_ON))
 
         val serviceIntent = shadowOf(application).nextStartedService
@@ -33,8 +33,8 @@ class ScreenOnReceiverTest {
     }
 
     @Test
-    fun `onReceive with ringer off does not start ShakeDetectorService`() {
-        audioManager.ringerMode = AudioManager.RINGER_MODE_VIBRATE
+    fun `onReceive with a zero ring stream volume does not start ShakeDetectorService`() {
+        audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0)
         receiver.onReceive(application, Intent(Intent.ACTION_SCREEN_ON))
 
         val serviceIntent = shadowOf(application).nextStartedService
