@@ -48,7 +48,7 @@ class ScreenServiceTest {
     @Test
     fun `onCreate registers a ScreenOnReceiver`() {
         runService<ScreenService> { service ->
-            val receiver = findReceiverForIntentAction(service.application, Intent.ACTION_SCREEN_ON)
+            val receiver = findReceiverForScreenOnAction(service.application)
             assertThat(receiver is ScreenOnReceiver, equalTo(true))
         }
     }
@@ -56,7 +56,7 @@ class ScreenServiceTest {
     @Test
     fun `onDestroy unregisters the ScreenOnReceiver`() {
         val service = runService<ScreenService>()
-        val receiver = findReceiverForIntentAction(service.application, Intent.ACTION_SCREEN_ON)
+        val receiver = findReceiverForScreenOnAction(service.application)
         assertThat(receiver, nullValue())
     }
 
@@ -73,22 +73,18 @@ class ScreenServiceTest {
     }
 
     /**
-     * Finds a broadcast receiver that can matches the given intent action
+     * Finds a broadcast receiver that is registered to handle {@code Intent.ACTION_SCREEN_ON}.
      *
      * This exists because {@code org.robolectric.shadows.ShadowApplication#getReceiversForIntent}
      * is deprecated.
      *
      * @param application the application instance
-     * @param action intent action to match against
-     * @return a broadcast receiver that handles the given intent action, or null if there isn't a
-     *   matching receiver
+     * @return a broadcast receiver that handles {@code Intent.ACTION_SCREEN_ON}, or null if there
+     *   isn't a matching receiver
      */
-    private fun findReceiverForIntentAction(application: Application, action: String): BroadcastReceiver? {
-        for (wrapper in shadowOf(application).registeredReceivers) {
-            if (wrapper.intentFilter.matchAction(action)) {
-                return wrapper.broadcastReceiver
-            }
-        }
-        return null
+    private fun findReceiverForScreenOnAction(application: Application): BroadcastReceiver? {
+        return shadowOf(application).registeredReceivers.find {
+            it.intentFilter.matchAction(Intent.ACTION_SCREEN_ON)
+        }?.broadcastReceiver
     }
 }
