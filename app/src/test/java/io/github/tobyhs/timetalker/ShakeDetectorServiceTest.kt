@@ -96,7 +96,7 @@ class ShakeDetectorServiceTest {
             TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
             service.clock = Clock.fixed(Instant.ofEpochSecond(1569182800), ZoneId.systemDefault())
             service.hearShake()
-            assertThat(shadowOf(service.textToSpeech).lastSpokenText, equalTo("8 06 PM"))
+            assertThat(shadowOf(service.textToSpeech).lastSpokenText, equalTo("eight O six PM"))
         }
     }
 

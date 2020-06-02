@@ -14,20 +14,19 @@ import com.squareup.seismic.ShakeDetector
 
 import java.time.Clock
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 /**
  * A service that speaks the time if shaking is detected
  */
 class ShakeDetectorService : Service(), ShakeDetector.Listener {
     internal var clock: Clock = Clock.systemDefaultZone()
+    private val timeSpeller: TimeSpeller = AmericanTimeSpeller()
     internal lateinit var textToSpeech: TextToSpeech
     private lateinit var shakeDetector: ShakeDetector
 
     companion object {
         const val NOTIFICATION_ID = 2
         const val LIFETIME_MILLIS = 10000L
-        val TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("h mm a")
     }
 
     override fun onCreate() {
@@ -59,7 +58,7 @@ class ShakeDetectorService : Service(), ShakeDetector.Listener {
     override fun hearShake() {
         val audioManager = getSystemService(AudioManager::class.java)!!
         if (audioManager.mode == AudioManager.MODE_NORMAL) {
-            val time = LocalTime.now(clock).format(TIME_FORMATTER)
+            val time = timeSpeller.spell(LocalTime.now(clock))
             textToSpeech.speak(time, TextToSpeech.QUEUE_FLUSH, null, time)
         }
     }
