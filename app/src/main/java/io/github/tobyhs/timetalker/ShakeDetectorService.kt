@@ -7,6 +7,7 @@ import android.hardware.SensorManager
 import android.media.AudioManager
 import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
 
@@ -42,7 +43,7 @@ class ShakeDetectorService : Service(), ShakeDetector.Listener {
         shakeDetector = ShakeDetector(this)
         shakeDetector.start(getSystemService(SensorManager::class.java))
 
-        Handler().postDelayed({ stopSelf() }, LIFETIME_MILLIS)
+        Handler(Looper.getMainLooper()).postDelayed({ stopSelf() }, LIFETIME_MILLIS)
     }
 
     override fun onDestroy() {

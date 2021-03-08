@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.content.Intent
 import android.media.AudioManager
+import android.os.Looper
 import android.speech.tts.TextToSpeech
 
 import java.time.Clock
@@ -22,12 +23,14 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowToast
 
 import io.github.tobyhs.timetalker.test.runService
 
 @RunWith(RobolectricTestRunner::class)
+@LooperMode(LooperMode.Mode.PAUSED)
 class ShakeDetectorServiceTest {
     @Test
     fun `onCreate foregrounds the service`() {
@@ -72,9 +75,10 @@ class ShakeDetectorServiceTest {
     @Test
     fun `stops itself eventually`() {
         val service = Robolectric.setupService(ShakeDetectorService::class.java)
-        ShadowLooper.pauseMainLooper()
-        Robolectric.getForegroundThreadScheduler().advanceBy(11, TimeUnit.SECONDS)
-        ShadowLooper.unPauseMainLooper()
+        shadowOf(Looper.getMainLooper()).idleFor(
+                ShakeDetectorService.LIFETIME_MILLIS + 1000,
+                TimeUnit.MILLISECONDS
+        )
         assertThat(shadowOf(service).isStoppedBySelf, equalTo(true))
     }
 
