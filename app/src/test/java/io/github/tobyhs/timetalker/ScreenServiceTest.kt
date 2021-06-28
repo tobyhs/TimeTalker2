@@ -68,8 +68,9 @@ class ScreenServiceTest {
 
     @Test
     fun `onBind returns null`() {
-        val service = ScreenService()
-        assertThat(service.onBind(Intent()), nullValue())
+        runService<ScreenService> { service ->
+            assertThat(service.onBind(Intent()), nullValue())
+        }
     }
 
     /**

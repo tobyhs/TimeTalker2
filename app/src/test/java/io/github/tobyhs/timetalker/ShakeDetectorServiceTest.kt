@@ -24,7 +24,6 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.LooperMode
-import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowToast
 
 import io.github.tobyhs.timetalker.test.runService
@@ -90,8 +89,9 @@ class ShakeDetectorServiceTest {
 
     @Test
     fun `onBind returns null`() {
-        val service = ShakeDetectorService()
-        assertThat(service.onBind(Intent()), nullValue())
+        runService<ShakeDetectorService> { service ->
+            assertThat(service.onBind(Intent()), nullValue())
+        }
     }
 
     @Test
