@@ -9,7 +9,7 @@ import android.content.Intent
  */
 class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.action)) {
+        if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
             val serviceIntent = Intent(context, ScreenService::class.java)
             context.startForegroundService(serviceIntent)
         }
