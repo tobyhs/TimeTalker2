@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name='Time Talker'
-include ':app'
+rootProject.name = "Time Talker"
+include(":app")
