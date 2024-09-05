@@ -4,7 +4,10 @@ import android.app.Application
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
+import androidx.test.core.app.ApplicationProvider
 
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
@@ -51,6 +54,24 @@ class ScreenServiceTest {
             val receiver = findReceiverForScreenOnAction(service.application)
             assertThat(receiver is ScreenOnReceiver, equalTo(true))
         }
+    }
+
+    @Test
+    fun `onCreate and onDestroy enables and disables BootCompletedReceiver`() {
+        val app = ApplicationProvider.getApplicationContext<App>()
+        val packageManager = app.packageManager
+        val receiverComponent = ComponentName(app, BootCompletedReceiver::class.java)
+
+        runService<ScreenService> {
+            assertThat(
+                packageManager.getComponentEnabledSetting(receiverComponent),
+                equalTo(PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
+            )
+        }
+        assertThat(
+            packageManager.getComponentEnabledSetting(receiverComponent),
+            equalTo(PackageManager.COMPONENT_ENABLED_STATE_DISABLED)
+        )
     }
 
     @Test
