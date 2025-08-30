@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -36,6 +37,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 stopService(serviceIntent)
             }
+        }
+
+        findViewById<AppCompatButton>(R.id.start_shake_detector_service_button).setOnClickListener {
+            startService(Intent(this, ShakeDetectorService::class.java))
         }
     }
 }

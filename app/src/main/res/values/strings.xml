@@ -4,5 +4,6 @@
     <string name="enabled">Enabled</string>
     <string name="screen_service_notification_title">Detecting when screen turns on</string>
     <string name="shake_detector_notification_title">Detecting shaking</string>
+    <string name="start_ShakeDetectorService">Start ShakeDetectorService (for testing)</string>
     <string name="tts_init_failure">Time Talker: Failed to initialize TextToSpeech</string>
 </resources>

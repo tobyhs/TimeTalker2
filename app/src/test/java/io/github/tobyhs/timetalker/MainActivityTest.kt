@@ -1,6 +1,7 @@
 package io.github.tobyhs.timetalker
 
 import android.content.ComponentName
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SwitchCompat
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -54,6 +55,17 @@ class MainActivityTest {
             switch.toggle()
             val actualComponent = shadowOf(activity).nextStoppedService.component
             val expectedComponent = ComponentName(activity, ScreenService::class.java)
+            assertThat(actualComponent, equalTo(expectedComponent))
+        }
+    }
+
+    @Test
+    fun `starts ShakeDetectorService when button is tapped`() {
+        launch(MainActivity::class.java).onActivity { activity ->
+            val button = activity.findViewById<AppCompatButton>(R.id.start_shake_detector_service_button)
+            button.performClick()
+            val actualComponent = shadowOf(activity).nextStartedService.component
+            val expectedComponent = ComponentName(activity, ShakeDetectorService::class.java)
             assertThat(actualComponent, equalTo(expectedComponent))
         }
     }
