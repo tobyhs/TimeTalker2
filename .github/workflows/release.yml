@@ -18,6 +18,6 @@ jobs:
       - name: Build
         run: ./gradlew --no-daemon assembleLocal
       - name: Create Release
-        run: gh release create --draft "$GITHUB_REF_NAME" app/build/outputs/apk/local/app-*.apk
+        run: gh release create --draft --title "$GITHUB_REF_NAME" "$GITHUB_REF_NAME" app/build/outputs/apk/local/app-*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
